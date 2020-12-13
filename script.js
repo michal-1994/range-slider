@@ -14,7 +14,7 @@ function buildRangeSliderFunction() {
                 inputArray.push(checbox.value); 
             }
             inputArray.map(i=>Number(i))
-    
+            
             inputMin = Math.min(...inputArray.map(i=>Number(i)));
             inputMax = Math.max(...inputArray.map(i=>Number(i)));
         }
@@ -47,7 +47,6 @@ function buildRangeSliderFunction() {
                 option.value = i;
     
             select.appendChild(option);
-            console.log(select.value);
         }
     
         let html5Slider = document.getElementById('html5');
@@ -70,13 +69,20 @@ function buildRangeSliderFunction() {
     
             if (handle) {
                 inputNumber.value = Math.round(value); // cena w input zaokrąglona
-                newMinPrice = inputNumber.value;
+                newMaxPrice = inputNumber.value;
             } else {
                 select.value = Math.round(value); // cena w input zaokrąglona
-                newMaxPrice = select.value;
+                newMinPrice = select.value;
+            }
+
+            // Function to checked checkbox
+            if (range.checboxes.length > 1) {
+                for (let checbox of range.checboxes) {
+                    (checbox.value >= newMinPrice && checbox.value <= newMaxPrice) ? checbox.checked = true : checbox.checked = false;
+                }                
             }
         });
-    
+
         select.addEventListener('change', function(){
             html5Slider.noUiSlider.set([this.value, null]);
         });
